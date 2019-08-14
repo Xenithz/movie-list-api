@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Xenithz/movie-list-api#readme",
   "dependencies": {
     "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
     "koa-combine-routers": "^4.0.2",
     "koa-json": "^2.0.2",
     "koa-router": "^7.4.0",

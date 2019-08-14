@@ -24,9 +24,7 @@ movieRouter.get(`${config.apiURL}/movies`, async (ctx, next) => {
 });
 
 movieRouter.get(`${config.apiURL}/movies`, async (ctx, next) => {
-    console.log('hey');
     if(ctx.query.director != null) {
-        console.log('heyyyy');
         const movies = await dbWrapper.getMovieByDirector(ctx.query.director);
         ctx.body = movies;
     }
@@ -36,7 +34,6 @@ movieRouter.get(`${config.apiURL}/movies`, async (ctx, next) => {
 });
 
 movieRouter.get(`${config.apiURL}/movies`, async (ctx) => {
-    console.log('hi');
     const movies = await dbWrapper.getAllMovies();
     ctx.body = movies;
 });
@@ -46,5 +43,19 @@ movieRouter.get(`${config.apiURL}/movies/:id`, async (ctx) => {
     ctx.body = movie;
 });
 
+movieRouter.post(`${config.apiURL}/movies`, async (ctx) => {
+    const response = await dbWrapper.createNewMovie(ctx.request.body);
+    ctx.body = response;
+});
+
+movieRouter.put(`${config.apiURL}/movies/:id`, async (ctx) => {
+    const response = await dbWrapper.updateOrCreateMovie(ctx.request.body, ctx.params.id);
+    ctx.body = response;
+});
+
+movieRouter.delete(`${config.apiURL}/movies/:id`, async (ctx) => {
+    const response = await dbWrapper.deleteMovie(ctx.params.id);
+    ctx.body = response;
+});
 
 module.exports = movieRouter;
