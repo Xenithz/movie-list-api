@@ -3,11 +3,13 @@ const Json = require('koa-json');
 const bodyParser = require('koa-bodyparser');
 const config = require('./config.json');
 const composedRouter = require('./routes/composer');
+const limiter = require('./limiters/all-req-limiter');
 
 const app = new Koa();
 
 app.use(Json());
 app.use(bodyParser());
+app.use(limiter);
 app.use(composedRouter());
 
 const server = app.listen(config.port, () => {
