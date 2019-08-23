@@ -13,7 +13,7 @@ app.use(limiter);
 app.use(composedRouter());
 
 const server = app.listen(process.env.PORT || config.port, () => {
-    console.log(`Server started listening on port: ${config.port}`);
+    console.log(`Server started listening on port: ${process.env.PORT || config.port}`);
 });
 
 module.exports = server;
