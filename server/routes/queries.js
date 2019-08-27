@@ -142,7 +142,7 @@ async function idQuery(id) {
 
 async function insertQuery(body) {
     await pool.query(`INSERT INTO movies (movie_id, movie_title, movie_genre, movie_director)
-    VALUES ($1, $2, $3, $4)`, [body.movieid, body.movietittle, body.moviegenre, body.moviedirector]);
+    VALUES ($1, $2, $3, $4)`, [body.movieid, body.movietitle, body.moviegenre, body.moviedirector]);
 }
 
 module.exports = {
