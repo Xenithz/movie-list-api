@@ -1,5 +1,5 @@
 # movie-list-api
-
+A small REST api with CRUD functionality that I made for practice. Uses KoaJs and PostgreSQL.
 (https://bbiumovieapi.herokuapp.com/)
 
 ## Routes
