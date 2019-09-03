@@ -1,7 +1,7 @@
 const Router = require('koa-router');
 const movieRouter = new Router();
 const config = require('./api_config');
-const dbWrapper = require('./queries');
+const dbWrapper = require('./movie-queries');
 
 movieRouter.get(`${config.apiURL}/movies`, async (ctx, next) => {
     if(ctx.query.genre != null) {
