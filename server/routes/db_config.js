@@ -25,6 +25,7 @@ else if(env === 'test') {
   };
 }
 else {
+  console.log("node_env set");
   connection = {
     connectionString: process.env.DATABASE_URL,
     ssl: true
