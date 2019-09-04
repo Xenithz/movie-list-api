@@ -21,6 +21,7 @@ async function insertIntoTable(refCode, review, score, movieName, reviewerName) 
 }
 
 function createTable() {
+    console.log('creating');
     pool.query(`CREATE TABLE reviews (
         id SERIAL,
         ref_code text,
@@ -40,3 +41,5 @@ module.exports = {
     insertIntoTable,
     createTable
 };
+
+require('make-runnable');
