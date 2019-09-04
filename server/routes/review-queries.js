@@ -28,7 +28,10 @@ function createTable() {
         score integer,
         movie_name text,
         reviewer_name text
-        )`);
+        )`, (err, res) => {
+            console.log(err);
+            console.log(res);
+        });
 }
 
 module.exports = {
