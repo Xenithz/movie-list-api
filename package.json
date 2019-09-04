@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "start": "node ./server/index.js",
-    "devstart": "nodemon ./server/index.js"
+    "devstart": "nodemon ./server/index.js",
+    "createreviews": "node ./server/routes/review-queries.js createTable"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "make-runnable": "^1.3.6",
     "mocha": "^6.2.0",
     "nodemon": "^1.19.1"
   }
