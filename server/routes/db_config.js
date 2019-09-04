@@ -16,6 +16,7 @@ if(env === 'development') {
     };
 }
 else if(env === 'test') {
+  console.log("test set");
   connection = {
     user: process.env.TEST_DB_USER,
     host: process.env.DB_HOST,
