@@ -5,8 +5,8 @@ async function getAllMovies() {
         const movies = await pool.query('SELECT * FROM movies ORDER BY id ASC');
         return movies.rows;
     }
-    catch {
-        console.log('failed db');   
+    catch (error) {
+        console.log(error);
     }
 }
 
@@ -15,8 +15,8 @@ async function getMovieByID(movieID) {
         const movie = await pool.query('SELECT * FROM movies WHERE movie_id = $1', [movieID]);
         return movie.rows;
     }
-    catch{
-        console.log('failed db');   
+    catch (error) {
+        console.log(error);
     }
 }
 
@@ -25,8 +25,8 @@ async function getMovieByTitle(movieTitle) {
         const movies = await pool.query('SELECT * FROM movies WHERE movie_title = $1', [movieTitle]);
         return movies.rows;
     }
-    catch {
-        console.log('failed db');
+    catch (error) {
+        console.log(error);
     }
 }
 
@@ -35,8 +35,8 @@ async function getMovieByGenre(movieGenre) {
         const movies = await pool.query('SELECT * FROM movies WHERE movie_genre = $1', [movieGenre]);
         return movies.rows;
     }
-    catch {
-        console.log('failed db');
+    catch (error) {
+        console.log(error);
     }
 }
 
@@ -45,8 +45,8 @@ async function getMovieByDirector(movieDirector) {
         const movies = await pool.query('SELECT * FROM movies WHERE movie_director = $1', [movieDirector]);
         return movies.rows;
     }
-    catch {
-        console.log('failed db');
+    catch (error) {
+        console.log(error);
     }
 }
 
@@ -71,8 +71,8 @@ async function createNewMovie(body) {
             return response;
         }
     }
-    catch {
-        console.log('failed db');
+    catch (error) {
+        console.log(error);
     }
 }
 
@@ -104,8 +104,8 @@ async function updateOrCreateMovie(body, movieID) {
             return response;
         }
     }
-    catch {
-        console.log('failed db');
+    catch (error) {
+        console.log(error);
     }
 }
 
@@ -130,19 +130,29 @@ async function deleteMovie(movieID) {
             return response;
         }
     }
-    catch {
-        console.log('failed db');
+    catch (error) {
+        console.log(error);
     }
 }
 
 async function idQuery(id) {
-    const check = await pool.query('SELECT * FROM movies WHERE movie_id = $1', [id]);
-    return check;
+    try { 
+        const check = await pool.query('SELECT * FROM movies WHERE movie_id = $1', [id]);
+        return check;
+    }
+    catch (error) {
+        console.log(error);
+    }
 }
 
 async function insertQuery(body) {
-    await pool.query(`INSERT INTO movies (movie_id, movie_title, movie_genre, movie_director)
-    VALUES ($1, $2, $3, $4)`, [body.movieid, body.movietitle, body.moviegenre, body.moviedirector]);
+    try {
+        await pool.query(`INSERT INTO movies (movie_id, movie_title, movie_genre, movie_director)
+        VALUES ($1, $2, $3, $4)`, [body.movieid, body.movietitle, body.moviegenre, body.moviedirector]);
+    }
+    catch (error) {
+        console.log(error);
+    }
 }
 
 module.exports = {
