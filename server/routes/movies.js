@@ -39,7 +39,7 @@ movieRouter.get(`${config.apiURL}/movies`, async (ctx) => {
 });
 
 movieRouter.get(`${config.apiURL}/movies/:id`, async (ctx) => {
-    const movie = await dbWrapper.getMovieByID(ctx.params.id);
+    const movie = await dbWrapper.getMovieByID(ctx.params.id);  
     ctx.body = movie;
 });
 

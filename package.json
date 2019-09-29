@@ -7,7 +7,8 @@
     "test": "mocha",
     "start": "node ./server/index.js",
     "devstart": "nodemon ./server/index.js",
-    "createreviews": "node ./server/routes/review-queries.js createTable"
+    "createreviews": "node ./server/routes/review-queries.js createTable",
+    "createmovies": "node ./server/routes/movie-queries.js createTable"
   },
   "repository": {
     "type": "git",
