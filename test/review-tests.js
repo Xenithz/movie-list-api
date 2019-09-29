@@ -89,7 +89,7 @@ describe('Reviews', () => {
         it('Should return success message that review was added', async () => {
             const res = await chai.request(server).post('/api/reviews')
             .set('content-type', 'application/x-www-form-urlencoded')
-            .send({refCode: '123a', review: "good movie", movieName: "chicken little", reviewerName: "angelo guerrero"})
+            .send({refCode: '123a', review: "good movie", movieName: "chicken little", reviewerName: "angelo guerrero"});
             expect(res.body).to.be.a('object');
             expect(res.body.message).to.be.eql('Created new review (refCode: 123a)');
         });
@@ -100,7 +100,7 @@ describe('Reviews', () => {
             await queries.insertIntoTable(testReviewA);
             const res = await chai.request(server).put('/api/reviews/12312312a')
             .set('content-type', 'application/x-www-form-urlencoded')
-            .send({refCode: '123a', review: "good movie", movieName: "chicken little", reviewerName: "angelo guerrero"})
+            .send({refCode: '123a', review: "good movie", movieName: "chicken little", reviewerName: "angelo guerrero"});
             expect(res.body).to.be.a('object');
             expect(res.body.message).to.be.eql('Updated review');
         });
@@ -110,7 +110,7 @@ describe('Reviews', () => {
         it('Should return success message that new review was inserted', async () => {
             const res = await chai.request(server).put('/api/reviews/12312312a')
             .set('content-type', 'application/x-www-form-urlencoded')
-            .send({refCode: '123a', review: "good movie", movieName: "chicken little", reviewerName: "angelo guerrero"})
+            .send({refCode: '123a', review: "good movie", movieName: "chicken little", reviewerName: "angelo guerrero"});
             expect(res.body).to.be.a('object');
             expect(res.body.message).to.be.eql('Created new review');
         });

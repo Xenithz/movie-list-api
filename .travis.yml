@@ -7,3 +7,4 @@ before_script:
   - psql -c 'create database test_movie_api;' -U postgres
   - psql -c "create user test_user with password 'foobar';" -U postgres
   - "npm run createreviews"
+  - "npm run createmovies"
