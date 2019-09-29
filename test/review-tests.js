@@ -4,7 +4,7 @@ let chaiHttp = require('chai-http');
 let expect = chai.expect;
 const queries = require('../server/routes/review-queries');
 
-const testMovieA = {
+const testReviewA = {
     refCode: "12312312a",
     review: "good movie",
     score: 10,
@@ -12,7 +12,7 @@ const testMovieA = {
     reviewerName: "angelo guerrero"
 };
 
-const testMovieB = {
+const testReviewB = {
     refCode: "5424bsdf3",
     review: "alright movie",
     score: 5,
@@ -20,7 +20,7 @@ const testMovieB = {
     reviewerName: "bob guerrero"
 };
 
-const testMovieC = {
+const testReviewC = {
     refCode: "6576439ah",
     review: "great movie",
     score: 10,
@@ -37,7 +37,7 @@ describe('Reviews', () => {
     
     describe('HTTP GET all reviews', () => {
         it('Should return all reviews inside the database (1)', async () => {
-            await queries.insertIntoTable(testMovieA);
+            await queries.insertIntoTable(testReviewA);
             const res = await chai.request(server).get('/api/reviews');
             expect(res.body).to.be.an('array');
             expect(res.body.length).to.be.eql(1);
@@ -46,8 +46,8 @@ describe('Reviews', () => {
 
     describe('HTTP GET review by referal code', () => {
         it('Should return the review which corresponds with given referal code', async () => {
-            await queries.insertIntoTable(testMovieA);
-            const res = await chai.request(server).get('/api/reviews/12312312a')
+            await queries.insertIntoTable(testReviewA);
+            const res = await chai.request(server).get('/api/reviews/12312312a');
             expect(res.body).to.be.an('array');
             expect(res.body.length).to.be.eql(1);
             expect(res.body[0].ref_code).to.be.eql('12312312a');
@@ -56,8 +56,8 @@ describe('Reviews', () => {
 
     describe('HTTP GET reviews by reviewer', () => {
         it('Should return reviews written by specified reviewer', async () => {
-            await queries.insertIntoTable(testMovieA);
-            await queries.insertIntoTable(testMovieB);
+            await queries.insertIntoTable(testReviewA);
+            await queries.insertIntoTable(testReviewB);
             const res = await chai.request(server).get('/api/reviews').query('reviewer=angelo guerrero');
             expect(res.body).to.be.an('array');
             expect(res.body.length).to.be.eql(1);
@@ -66,9 +66,9 @@ describe('Reviews', () => {
 
     describe('HTTP GET reviews by score', () => {
         it('Should return reviews that received specified score', async () => {
-            await queries.insertIntoTable(testMovieA);
-            await queries.insertIntoTable(testMovieB);
-            await queries.insertIntoTable(testMovieC);
+            await queries.insertIntoTable(testReviewA);
+            await queries.insertIntoTable(testReviewB);
+            await queries.insertIntoTable(testReviewC);
             const res = await chai.request(server).get('/api/reviews').query('score=10');
             expect(res.body).to.be.an('array');
             expect(res.body.length).to.be.eql(2);
@@ -77,8 +77,8 @@ describe('Reviews', () => {
 
     describe('HTTP GET reviews by movie name', () => {
         it('Should return reviews of specified movie name', async () => {
-            await queries.insertIntoTable(testMovieA);
-            await queries.insertIntoTable(testMovieB);
+            await queries.insertIntoTable(testReviewA);
+            await queries.insertIntoTable(testReviewB);
             const res = await chai.request(server).get('/api/reviews').query('moviename=chicken little');
             expect(res.body).to.be.an('array');
             expect(res.body.length).to.be.eql(1);
@@ -97,7 +97,7 @@ describe('Reviews', () => {
 
     describe('HTTP PUT update a review', () => {
         it('Should return success message that review was updated', async () => {
-            await queries.insertIntoTable(testMovieA);
+            await queries.insertIntoTable(testReviewA);
             const res = await chai.request(server).put('/api/reviews/12312312a')
             .set('content-type', 'application/x-www-form-urlencoded')
             .send({refCode: '123a', review: "good movie", movieName: "chicken little", reviewerName: "angelo guerrero"})
@@ -118,7 +118,7 @@ describe('Reviews', () => {
 
     describe('HTTP DELETE delete a review', () => {
         it('Should return success message that review was deleted', async () => {
-            await queries.insertIntoTable(testMovieA);
+            await queries.insertIntoTable(testReviewA);
             const res = await chai.request(server).delete('/api/reviews/12312312a');
             expect(res.body).to.be.a('object');
             expect(res.body.message).to.be.eql('Deleted movie');

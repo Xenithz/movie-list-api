@@ -10,9 +10,9 @@ async function getAllMovies() {
     }
 }
 
-async function getMovieByID(movieID) {
+async function getMovieByID(movieId) {
     try {
-        const movie = await pool.query('SELECT * FROM movies WHERE movie_id = $1', [movieID]);
+        const movie = await pool.query('SELECT * FROM movies WHERE movie_id = $1', [movieId]);
         return movie.rows;
     }
     catch (error) {
@@ -52,13 +52,13 @@ async function getMovieByDirector(movieDirector) {
 
 async function createNewMovie(body) {
     try {
-        const idCheck = await idQuery(body.movieid);
+        const idCheck = await idQuery(body.movieId);
 
         if(idCheck.rowCount === 0) {
             await insertQuery(body);
 
             const response = {
-                "message": `Created new movie (ID: ${body.movieid})`
+                "message": `Created new movie (ID: ${body.movieId})`
             };
             
             return response;
@@ -76,15 +76,15 @@ async function createNewMovie(body) {
     }
 }
 
-async function updateOrCreateMovie(body, movieID) {
+async function updateOrCreateMovie(body, movieId) {
     try {
-        const idCheck = await idQuery(body.movieid);
+        const idCheck = await idQuery(movieId);
 
         if(idCheck.rowCount === 0) {
             await insertQuery(body);
 
             const response = {
-                "message": `Created new movie (ID: ${body.movieid})`
+                "message": `Created new movie (ID: ${body.movieId})`
             };
             
             return response;
@@ -95,10 +95,10 @@ async function updateOrCreateMovie(body, movieID) {
             movie_title = $3,
             movie_genre = $4,
             movie_director = $5
-            WHERE movie_id = $1`, [movieID, body.movieid, body.movietitle, body.moviegenre, body.moviedirector]);
+            WHERE movie_id = $1`, [movieId, body.movieId, body.movieTitle, body.movieGenre, body.movieDirector]);
 
             const response = {
-                "message": `Updated movie (ID: ${body.movieid})`
+                "message": `Updated movie (ID: ${body.movieId})`
             };
             
             return response;
@@ -109,9 +109,9 @@ async function updateOrCreateMovie(body, movieID) {
     }
 }
 
-async function deleteMovie(movieID) {
+async function deleteMovie(movieId) {
     try {
-        const idCheck = await idQuery(movieID);
+        const idCheck = await idQuery(movieId);
 
         if(idCheck.rowCount === 0) {
             const response = {
@@ -121,10 +121,10 @@ async function deleteMovie(movieID) {
             return response;
         }
         else {
-            await pool.query('DELETE FROM movies WHERE movie_id = $1', [movieID]);
+            await pool.query('DELETE FROM movies WHERE movie_id = $1', [movieId]);
 
             const response = {
-                "message": `Deleted movie (old ID: ${movieID})`
+                "message": `Deleted movie (old ID: ${movieId})`
             };
             
             return response;
@@ -148,7 +148,17 @@ async function idQuery(id) {
 async function insertQuery(body) {
     try {
         await pool.query(`INSERT INTO movies (movie_id, movie_title, movie_genre, movie_director)
-        VALUES ($1, $2, $3, $4)`, [body.movieid, body.movietitle, body.moviegenre, body.moviedirector]);
+        VALUES ($1, $2, $3, $4)`, [body.movieId, body.movieTitle, body.movieGenre, body.movieDirector]);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+async function clearTable() {
+    try {
+        await pool.query('ALTER SEQUENCE movies_id_seq RESTART');
+        await pool.query('TRUNCATE movies');
     }
     catch (error) {
         console.log(error);
@@ -163,5 +173,7 @@ module.exports = {
     getMovieByDirector,
     createNewMovie,
     updateOrCreateMovie,
-    deleteMovie
+    deleteMovie,
+    insertQuery,
+    clearTable
 };
