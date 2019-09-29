@@ -165,6 +165,21 @@ async function clearTable() {
     }
 }
 
+function createTable() {
+    try {
+        pool.query(`CREATE TABLE movies (
+            id SERIAL,
+            movie_id integer,
+            movie_title text,
+            movie_genre text,
+            movie_director text
+            )`);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     getAllMovies,
     getMovieByID,
@@ -175,5 +190,8 @@ module.exports = {
     updateOrCreateMovie,
     deleteMovie,
     insertQuery,
-    clearTable
+    clearTable,
+    createTable
 };
+
+require('make-runnable');
